@@ -17,7 +17,7 @@ function TodoItem({ todo }) {
 
     return (
         <div
-            className={`flex items-center border border-black/10 rounded-lg px-3 py-1.5 gap-x-3 shadow-sm shadow-white/50 dark:shadow-lg duration-300  text-black dark:text-white ${todo.completed ? "bg-[#c6e9a7] dark:bg-[#35373c] dark:opacity-60" : "bg-[#ccbed7] dark:bg-[#35373c]"
+            className={`flex items-center border border-black/10 rounded-lg px-3 py-1.5 gap-x-3 shadow-sm shadow-white/50 dark:shadow-lg duration-300  text-black dark:text-white ${todo.completed ? "bg-[#c6e9a7] dark:bg-[#35373c47] " : "bg-[#ccbed7] dark:bg-[#35373c]"
                 }`}
         >
             <input
@@ -47,14 +47,14 @@ function TodoItem({ todo }) {
                 }}
                 disabled={todo.completed}
             >
-                {isTodoEditable ? <i class="fa-regular fa-square-check"></i> : <i class="fa-regular fa-pen-to-square"></i>}
+                {isTodoEditable ? <i class="fa-regular fa-square-check text-green-500"></i> : <i class="fa-regular fa-pen-to-square text-blue-500"></i>}
             </button>
             {/* Delete Todo Button */}
             <button
                 className="inline-flex w-8 h-8 rounded-lg shadow-md text-sm border border-black/10 justify-center active:scale-95 items-center bg-gray-50 dark:bg-[#2a2a2a] dark:hover:bg-[#303030]  shrink-0"
                 onClick={() => deleteTodo(todo.id)}
             >
-                <i class="fa-regular fa-trash-can"></i>
+                <i class="fa-regular fa-trash-can text-red-500"></i>
             </button>
         </div>
     );
