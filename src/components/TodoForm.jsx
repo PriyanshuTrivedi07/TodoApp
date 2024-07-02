@@ -31,7 +31,7 @@ function TodoForm() {
                 onChange={(e) => setTodo(e.target.value)}
             />
             <button type="submit" onClick={makefocus} className="rounded-r-lg px-4 py-1 bg-green-600 dark:bg-[#bfdbfe] dark:hover:bg-[#a8cefc] dark:active:bg-[#bfdbfe] dark:text-black font-medium border border-l-0 border-green-600 dark:border-[#bfdbfe]  text-white shrink-0">
-                <i class="fa-regular fa-square-plus"></i> Add 
+                <i className="fa-regular fa-square-plus"></i> Add 
             </button>
         </form>
     );
