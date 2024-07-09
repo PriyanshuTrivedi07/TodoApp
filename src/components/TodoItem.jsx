@@ -1,9 +1,12 @@
 import React, { useRef, useState } from 'react'
 import { useTodo } from '../contexts';
+import {ConfirmationPopup} from "./index"
 
 function TodoItem({ todo }) {
     const [isTodoEditable, setIsTodoEditable] = useState(false)
     const [todoMsg, setTodoMsg] = useState(todo.todo)
+    const [showConfirmation, setShowConfirmation] = useState(false)
+
     const { updateTodo, deleteTodo, toggleCompleted } = useTodo()
     const editRef = useRef(null)
 
@@ -20,8 +23,22 @@ function TodoItem({ todo }) {
         editRef.current.focus();
     }
 
+    // Delete functionality with delete confirmation popup
+    const handledelete = () => {
+        setShowConfirmation(true);
+    }
+
+    const handleCancelDelete = () => {
+        setShowConfirmation(false)
+    }
+    
+    const handleConfirmDelete = () => {
+        deleteTodo(todo.id)
+        setShowConfirmation(false)
+    }
 
     return (
+        <>
         <div
             className={`flex items-center border border-black/10 rounded-lg px-3 py-1.5 gap-x-3 shadow-sm shadow-white/50 dark:shadow-lg duration-300  text-black dark:text-white ${todo.completed ? "bg-[#c6e9a7] dark:bg-[#35373c47] " : "bg-[#ccbed7] dark:bg-[#35373c]"
                 }`}
@@ -59,11 +76,21 @@ function TodoItem({ todo }) {
             {/* Delete Todo Button */}
             <button
                 className="inline-flex w-8 h-8 rounded-lg shadow-md text-sm border border-black/10 justify-center active:scale-95 items-center bg-gray-50 dark:bg-[#2a2a2a] dark:hover:bg-[#303030]  shrink-0"
-                onClick={() => deleteTodo(todo.id)}
+                onClick={handledelete}
             >
                 <i className="fa-regular fa-trash-can text-red-500"></i>
             </button>
         </div>
+
+            {showConfirmation && (
+                <ConfirmationPopup
+                    message={"This action will delete this task. Are you sure to continue ?"}
+                    onConfirm={handleConfirmDelete}
+                    onCancle={handleCancelDelete}
+                />
+            )}
+
+        </>
     );
 }
 
