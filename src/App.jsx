@@ -50,11 +50,13 @@ function App() {
           <div className="mb-8">
             <TodoForm />
           </div>
-          <div className="flex flex-wrap gap-y-3">
-            {/*Loop and Add TodoItem here */}
+        </div>
+
+        <div className='container mx-auto p-4'>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 auto-rows-auto">
             {todos.map((todo) => (
-              <div key={todo.id} className='w-full'>
-                <TodoItem todo={todo} />
+              <div key={todo.id} className=''>
+                <TodoItem todo={todo}/>
               </div>
             ))}
           </div>
