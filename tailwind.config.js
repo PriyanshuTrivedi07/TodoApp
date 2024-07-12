@@ -6,7 +6,14 @@ export default {
   ],
   darkMode: 'class',
   theme: {
-    extend: {},
+    extend: {
+      gridAutoRows: {
+        'auto': 'auto',
+        'min': 'min-content',
+        'max': 'max-content',
+        'fr': '1fr',
+      },
+    },
   },
   plugins: [],
 }
