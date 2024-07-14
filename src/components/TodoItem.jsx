@@ -13,7 +13,7 @@ function TodoItem({ todo }) {
     const editRef = useRef(null)
 
     const editTodo = () => {
-        updateTodo(todo.id, { ...todo, todoTitle: todoTitle, todoMsg: todoBody })
+        updateTodo(todo.id, { ...todo, todoTitle: todoTitle, todoBody: todoBody })
         setIsTodoEditable(false)
     }
 
@@ -26,8 +26,12 @@ function TodoItem({ todo }) {
     }
 
     const handleClose = () => {
-        setIsTodoEditable(false)
+        // setIsTodoEditable(false)
         if (todo.completed) return;
+        if (!todoBody) {
+            makeFocus()
+            return
+        };
         if (isTodoEditable) {
             editTodo();
         } else setIsTodoEditable((prev) => !prev);
@@ -52,7 +56,7 @@ function TodoItem({ todo }) {
 
             <div className={`${isTodoEditable ? "fixed inset-0 z-50 flex items-center justify-center p-4 overflow-y-scroll" : ""}`}>
 
-                {isTodoEditable && <div onClick={() => setIsTodoEditable(false)} className='fixed inset-0 backdrop-blur-[4px] bg-[#202124] dark:bg-[#202124] bg-opacity-60 dark:bg-opacity-75 transition-opacity duration-300'></div>}
+                {isTodoEditable && <div onClick={handleClose} className='fixed inset-0 backdrop-blur-[4px] bg-[#202124] dark:bg-[#202124] bg-opacity-60 dark:bg-opacity-75 transition-opacity duration-300'></div>}
 
                 <div onClick={() => { setIsTodoEditable(true) }} className={`${isTodoEditable ? "z-50 w-full max-w-[600px] bg-white dark:bg-[#202124] shadow-md" : "bg-transparent hover:shadow-md "} relative transition-all duration-300 flex flex-col items-start gap-4  border border-black/10 dark:border-[#5f6368] rounded-lg p-4 gap-x-3 text-black dark:text-white`}>
                     {/* <input
