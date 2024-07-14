@@ -6,7 +6,7 @@ export const TodoContext = createContext({
         {
             id: 1,
             todoTitle: "title",
-            todoMsg: "Todo message",
+            todoBody: "Todo message",
             completed: false,
         }
     ],
