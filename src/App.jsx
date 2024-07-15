@@ -3,9 +3,11 @@ import { useEffect, useState } from 'react'
 import './App.css'
 import { TodoForm, TodoItem, Navbar } from './components/index.js'
 import { TodoProvider } from './contexts/index.js'
+import { useAutoAnimate } from '@formkit/auto-animate/react'
 function App() {
 
   const [todos, setTodos] = useState([])
+  const [parent, enableAnimations] = useAutoAnimate()
 
   const addTodo = (todo) => {
     setTodos((prev) => [{ id: Date.now(), ...todo }, ...prev])
@@ -53,10 +55,10 @@ function App() {
         </div>
 
         <div className='container mx-auto p-4'>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 auto-rows-auto">
+          <div ref={parent} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 auto-rows-auto">
             {todos.map((todo) => (
               <div key={todo.id} className=''>
-                <TodoItem todo={todo}/>
+                <TodoItem todo={todo} />
               </div>
             ))}
           </div>

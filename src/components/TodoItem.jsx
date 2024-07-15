@@ -2,13 +2,13 @@ import React, { useRef, useState } from 'react'
 import { useTodo } from '../contexts';
 import { ConfirmationPopup } from "./index"
 import TextareaAutosize from 'react-textarea-autosize';
-
+import { useAutoAnimate } from '@formkit/auto-animate/react';
 function TodoItem({ todo }) {
     const [isTodoEditable, setIsTodoEditable] = useState(false)
     const [todoTitle, setTodoTitle] = useState(todo.todoTitle)
     const [todoBody, setTodoBody] = useState(todo.todoBody)
     const [showConfirmation, setShowConfirmation] = useState(false)
-
+    const [parent, enableAnimations] = useAutoAnimate()
     const { updateTodo, deleteTodo, toggleCompleted } = useTodo()
     const editRef = useRef(null)
 
@@ -26,7 +26,6 @@ function TodoItem({ todo }) {
     }
 
     const handleClose = () => {
-        // setIsTodoEditable(false)
         if (todo.completed) return;
         if (!todoBody) {
             makeFocus()
@@ -56,9 +55,9 @@ function TodoItem({ todo }) {
 
             <div className={`${isTodoEditable ? "fixed inset-0 z-50 flex items-center justify-center p-4 overflow-y-scroll" : ""}`}>
 
-                {isTodoEditable && <div onClick={handleClose} className='fixed inset-0 backdrop-blur-[4px] bg-[#202124] dark:bg-[#202124] bg-opacity-60 dark:bg-opacity-75 transition-opacity duration-300'></div>}
+                {isTodoEditable && <div ref={parent} onClick={handleClose} className='fixed inset-0 backdrop-blur-[4px] bg-[#202124] dark:bg-[#202124] bg-opacity-60 dark:bg-opacity-75 transition-opacity duration-300'></div>}
 
-                <div onClick={() => { setIsTodoEditable(true) }} className={`${isTodoEditable ? "z-50 w-full max-w-[600px] bg-white dark:bg-[#202124] shadow-md" : "bg-transparent hover:shadow-md "} relative transition-all duration-300 flex flex-col items-start gap-4  border border-black/10 dark:border-[#5f6368] rounded-lg p-4 gap-x-3 text-black dark:text-white`}>
+                <div ref={parent} onClick={() => { setIsTodoEditable(true) }} className={`${isTodoEditable ? "z-50 w-full max-w-[600px] bg-white dark:bg-[#202124] shadow-md" : "bg-transparent hover:shadow-md "} relative transition-all duration-300 flex flex-col items-start gap-4  border border-black/10 dark:border-[#5f6368] rounded-lg p-4 gap-x-3 text-black dark:text-white`}>
                     {/* <input
                     type="checkbox"
                     className="dark:border-white-400/20 cursor-pointer dark:scale-100 transition-all duration-500 ease-in-out dark:hover:scale-110 dark:checked:scale-100 w-4 h-4"
