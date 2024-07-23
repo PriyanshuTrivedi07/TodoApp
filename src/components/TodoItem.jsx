@@ -1,14 +1,17 @@
 import React, { useRef, useState } from 'react'
 import { useTodo } from '../contexts';
-import { ConfirmationPopup } from "./index"
+import { ConfirmationPopup, Button, Input } from "./index"
 import TextareaAutosize from 'react-textarea-autosize';
 import { useAutoAnimate } from '@formkit/auto-animate/react';
+
+
 function TodoItem({ todo }) {
     const [isTodoEditable, setIsTodoEditable] = useState(false)
     const [todoTitle, setTodoTitle] = useState(todo.todoTitle)
     const [todoBody, setTodoBody] = useState(todo.todoBody)
     const [showConfirmation, setShowConfirmation] = useState(false)
     const [parent, enableAnimations] = useAutoAnimate()
+
     const { updateTodo, deleteTodo, toggleCompleted } = useTodo()
     const editRef = useRef(null)
 
@@ -25,7 +28,8 @@ function TodoItem({ todo }) {
         editRef.current.focus();
     }
 
-    const handleClose = () => {
+    const handleClose = (e) => {
+        e.stopPropagation();
         if (todo.completed) return;
         if (!todoBody) {
             makeFocus()
@@ -37,7 +41,8 @@ function TodoItem({ todo }) {
     }
 
     // Delete functionality with delete confirmation popup
-    const handledelete = () => {
+    const handledelete = (e) => {
+        e.stopPropagation()
         setShowConfirmation(true);
     }
 
@@ -66,20 +71,21 @@ function TodoItem({ todo }) {
                     onChange={toggleComplete}
                 /> */}
                     {todoTitle ?
-                        <input
+                        <Input
                             type="text"
                             placeholder='Title'
-                            className={`text-xl font-medium w-full  bg-transparent border-none outline-none ${todo.completed ? "line-through" : ""}`}
+                            className='text-xl'
                             value={todoTitle}
                             onChange={(e) => setTodoTitle(e.target.value)}
                             readOnly={!isTodoEditable}
-                        /> :
+                        />
+                        :
                         isTodoEditable &&
-                        <input
+                        <Input
                             type="text"
-                            className={`text-xl font-medium w-full  bg-transparent border-none outline-none ${todo.completed ? "line-through" : ""}`}
-                            value={todoTitle}
                             placeholder='Title'
+                            className='text-xl'
+                            value={todoTitle}
                             onChange={(e) => setTodoTitle(e.target.value)}
                             readOnly={!isTodoEditable}
                         />
@@ -96,27 +102,22 @@ function TodoItem({ todo }) {
 
                     {isTodoEditable &&
                         <div className='w-full flex justify-end gap-2'>
-                            <button
-                                role='button'
-                                className="inline-flex px-2 py-1 rounded-lg shadow-md text-sm border border-black/10 justify-center active:scale-95 items-center bg-gray-50 dark:bg-[#2a2a2a] dark:hover:bg-[#303030]  shrink-0"
-                                onClick={(e) => {
-                                    e.stopPropagation()
-                                    handleClose()
-                                }}
+
+                            <Button
+                                onClickFn={handleClose}
                             >
                                 Close
-                            </button>
+                            </Button>
                         </div>
                     }
 
                     {/* Delete Todo Button */}
-                    <button
-                        onClick={(e) => {
-                            e.stopPropagation();
-                            handledelete()
-                        }} className="absolute top-4 right-4 inline-flex w-8 h-8 rounded-lg shadow-md text-sm border border-black/10 justify-center active:scale-95 items-center bg-gray-50 dark:bg-[#2a2a2a] dark:hover:bg-[#303030]  shrink-0">
+                    <Button
+                        onClickFn={handledelete}
+                        className='absolute top-4 right-4 w-8 h-8'
+                    >
                         <i className="fas fa-trash-alt text-red-500 "></i>
-                    </button>
+                    </Button>
                 </div>
             </div>
 
